@@ -7,10 +7,23 @@
     <title>Tabela de Eixos</title>
 </head>
 <body>
+
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{{route('dashboard')}}">Home</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
     <h1>Tabela de Eixos</h1>
     <hr>
 
-    <a href="{{route('eixo.create')}}">Cadastrar</a>
+    @can('create', App\Models\Eixo::class) 
+        <a href="{{route('eixo.create')}}">Cadastrar</a>
+    @endcan
     <hr>
 
     <table>
@@ -30,7 +43,9 @@
                         <a href="{{asset('storage')."/".$item->url}}" target="_blank">Arquivo</a>
                     </td>
                     <td>
-                        <a href="{{route('eixo.show', $item->id)}}">Mais info</a>
+                        @can('edit', App\Models\Eixo::class) 
+                            <a href="{{route('eixo.show', $item->id)}}">Mais info</a>
+                        @endcan
                         <a href="{{route('eixo.edit', $item->id)}}">Alterar</a>
                         <a href="{{route('report')}}" target = "_blank">Relatorio</a>
                         <a href="{{route('graph')}}" target = "_blank">Gráfico</a>

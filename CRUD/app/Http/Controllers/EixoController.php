@@ -10,7 +10,9 @@ use Dompdf\Dompdf;
 class EixoController extends Controller
 {
     public function index()
-    {
+    {   
+        $this->authorize('index', Eixo::class);
+
         $data = Eixo::all();
         //dd($data);
         Storage::disk('local')->put('example.txt', 'Contents');
@@ -19,11 +21,15 @@ class EixoController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Eixo::class);
+
         return view('eixo.create');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', Eixo::class);
+
         if($request->hasFile('documento')){
             $eixo = new Eixo();
             $eixo->nome = $request->nome;
@@ -51,6 +57,8 @@ class EixoController extends Controller
     }
 
     public function show($id){
+        $this->authorize('show', Eixo::class);
+
         $eixo = Eixo::find($id);
         if(isset($eixo)){
             return view('eixo.show', compact(['eixo']));
@@ -60,6 +68,8 @@ class EixoController extends Controller
     }
 
     public function edit($id){
+        $this->authorize('edit', Eixo::class);
+
         $eixo = Eixo::find($id);
         if(isset($eixo)){
             return view('eixo.edit', compact(['eixo']));
@@ -69,6 +79,8 @@ class EixoController extends Controller
     }
 
     public function update(Request $request, $id){
+        $this->authorize('edit', Eixo::class);
+
         $eixo = Eixo::find($id);
         if(isset($eixo)){
             $eixo->nome = $request->nome;
@@ -83,6 +95,7 @@ class EixoController extends Controller
     }
 
     public function destroy($id){
+        $this->authorize('destroy', Eixo::class);
 
         $eixo = Eixo::find($id);
         if(isset($eixo)){
