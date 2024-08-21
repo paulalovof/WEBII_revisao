@@ -43,17 +43,24 @@
                         <a href="{{asset('storage')."/".$item->url}}" target="_blank">Arquivo</a>
                     </td>
                     <td>
-                        @can('edit', App\Models\Eixo::class) 
+                        @can('show', App\Models\Eixo::class) 
                             <a href="{{route('eixo.show', $item->id)}}">Mais info</a>
                         @endcan
-                        <a href="{{route('eixo.edit', $item->id)}}">Alterar</a>
+
+                        @can('edit', App\Models\Eixo::class) 
+                            <a href="{{route('eixo.edit', $item->id)}}">Alterar</a>
+                        @endcan
+
                         <a href="{{route('report')}}" target = "_blank">Relatorio</a>
                         <a href="{{route('graph')}}" target = "_blank">Gráfico</a>
+
+                        @can('destroy', App\Models\Eixo::class) 
                         <form method="POST" action="{{route('eixo.destroy', $item->id)}}">
                             @csrf
                             @method('DELETE')
                             <input type="submit" value="Remover"/>
                         </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach
